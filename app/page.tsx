@@ -1,7 +1,9 @@
+import Header from "@/components/homepage/Header";
+
 const HomePage = () => {
 	return (
 		<main>
-			<h1>Next.js + TypeScript</h1>
+			<Header />
 		</main>
 	)
 }
