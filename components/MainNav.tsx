@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-import { ModeToggle } from "./ui/modeToggle";
 import { Icons } from "./Icons";
 import { cn } from "@/lib/utils";
 
@@ -12,7 +11,7 @@ const MainNav = () => {
 
     return (
         <div className="mr-4 hidden md:flex">
-            <Link href="/" className="mr-6 flex items-center space-x-2">
+            <Link href="/" className="mr-24 flex items-center space-x-2">
                 <Icons.logo className="w-6 h-6" />
                 <span className="hidden font-bold sm:inline-block">
                     Nextamples
