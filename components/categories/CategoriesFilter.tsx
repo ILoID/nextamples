@@ -47,7 +47,6 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
     const category = searchParams.get("category");
     const tags = useMemo(() => searchParams.get("tags")?.split(",") || [], [searchParams])
     const complexity = searchParams.get("complexity");
-    const code = searchParams.get("code");
 
     const handleFilterChange = useCallback((filterName: string, filterValue: string) => {
         const params = new URLSearchParams(searchParams.toString());
@@ -99,15 +98,23 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
     }
 
     const SelectedTags: React.FC<{ tags: string[] }> = ({ tags }) => (
-        <div className="flex flex-wrap gap-2 border border-muted p-4 rounded">
-            {tags.map((tag) => (
-                <div key={tag} className="relative group inline-flex items-center cursor-pointer hover:opacity-50" onClick={() => handleRemoveTag(tag)}>
-                    <Badge variant={getVariant(tag)}>
-                        {tagList.find((tagItem) => tagItem.value === tag)?.label}
+        <div className="flex flex-wrap gap-2">
+            {tags.length > 0 ? (
+                tags.map((tag) => (
+                    <div key={tag} className="relative group inline-flex items-center cursor-pointer hover:opacity-50" onClick={() => handleRemoveTag(tag)}>
+                        <Badge variant={getVariant(tag)}>
+                            {tagList.find((tagItem) => tagItem.value === tag)?.label}
+                        </Badge>
+                        <X className="absolute w-6 h-6 text-red-500 opacity-0 group-hover:opacity-100" style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+                    </div>
+                ))
+            ) : (
+                <div className="relative group inline-flex items-center cursor-pointer hover:opacity-50">
+                    <Badge variant="outline">
+                        No tags selected
                     </Badge>
-                    <X className="absolute w-6 h-6 text-red-500 opacity-0 group-hover:opacity-100" style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
                 </div>
-            ))}
+            )}
         </div>
     );
 
@@ -118,6 +125,8 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
             </h1>
 
             <div className="flex flex-col p-4 space-y-4 rounded-md border border-muted md:flex-row md:justify-between md:items-center md:space-y-0">
+                <SelectedTags tags={tags} />
+
                 {/* Complexity Filter */}
                 <RadioGroup className="grid grid-cols-3 gap-4">
                     <Label htmlFor="easy" className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-green-500">
@@ -162,8 +171,6 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
                             </Command>
                         </PopoverContent>
                     </Popover>
-
-                    <SelectedTags tags={tags} />
                 </div>
             </div>
         </div>
