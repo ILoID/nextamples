@@ -10,6 +10,8 @@ import { Check, ChevronsUpDown, X } from "lucide-react";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "../ui/command";
 import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
+import CategoriesSearch from "./CategoriesSearch";
+import { SearchOptions } from "@/types/searchOptions";
 
 // TODO: Make a real tag list
 const tagList = [
@@ -97,8 +99,29 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
         }
     }
 
+    const handleSearch = useCallback((searchQuery: string, options: SearchOptions) => {
+        console.log(searchQuery, options)
+        const params = new URLSearchParams(searchParams.toString());
+
+        if (searchQuery) {
+            params.set("search", searchQuery);
+        } else {
+            params.delete("search");
+        }
+
+        for (const [option, value] of Object.entries(options)) {
+            if (value) {
+                params.set(option, "1");
+            } else {
+                params.delete(option);
+            }
+        }
+
+        router.push(pathname + "?" + params.toString());
+    }, [router, pathname, searchParams]);
+
     const SelectedTags: React.FC<{ tags: string[] }> = ({ tags }) => (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 md:flex-col">
             {tags.length > 0 ? (
                 tags.map((tag) => (
                     <div key={tag} className="relative group inline-flex items-center cursor-pointer hover:opacity-50" onClick={() => handleRemoveTag(tag)}>
@@ -121,7 +144,9 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
     return (
         <div className="p-4">
             <h1 className="mb-4">
-                <span className="text-2xl font-bold">Filters</span>
+                <span className="text-2xl font-extrabold">
+                    Find examples
+                </span>
             </h1>
 
             <div className="flex flex-col p-4 space-y-4 rounded-md border border-muted md:flex-row md:justify-between md:items-center md:space-y-0">
@@ -149,7 +174,7 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
                         <PopoverTrigger asChild>
                             <Button variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-between">
                                 <p className="truncate">
-                                    {tags.length > 0 ? tags.map(tagValue => tagList.find((tagItem) => tagItem.value === tagValue)?.label).join(", ") : "Tags"}
+                                    {tags.length} Tag{tags.length !== 1 ? "s" : ""} selected
                                 </p>
                                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
@@ -171,6 +196,11 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
                             </Command>
                         </PopoverContent>
                     </Popover>
+                </div>
+
+                {/* Search */}
+                <div>
+                    <CategoriesSearch onSearch={handleSearch} />
                 </div>
             </div>
         </div>
