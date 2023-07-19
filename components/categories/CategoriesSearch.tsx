@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Input } from "../ui/input";
-import { SearchOptions } from "@/types/searchOptions";
+import { SearchOptions } from "@/types";
+import { Checkbox } from "../ui/checkbox";
 
 interface CategoriesSearchProps {
     onSearch: (searchQuery: string, options: SearchOptions) => void;
@@ -36,24 +37,24 @@ const CategoriesSearch: React.FC<CategoriesSearchProps> = ({
         <div className="flex flex-col space-y-4">
             <Input type="text" placeholder="Search code..." onChange={handleSearchChange} value={searchQuery} />
             <div className="flex flex-col space-y-4">
-                <label className="flex items-center justify-start space-x-4 cursor-pointer">
-                    <Input className="h-6 w-6" type="checkbox" checked={options.searchInCodeOnly} onChange={() => handleOptionChange("searchInCodeOnly")} />
+                <div className="flex items-center justify-start space-x-4">
+                    <Checkbox className="h-6 w-6" checked={options.searchInCodeOnly} onClick={() => handleOptionChange("searchInCodeOnly")} />
                     <p className="text-sm font-sans">
                         Search in code only
                     </p>
-                </label>
-                <label className="flex items-center justify-start space-x-4 cursor-pointer">
-                    <Input className="h-6 w-6" type="checkbox" checked={options.matchCase} onChange={() => handleOptionChange("matchCase")} />
+                </div>
+                <div className="flex items-center justify-start space-x-4">
+                    <Checkbox className="h-6 w-6" checked={options.matchCase} onClick={() => handleOptionChange("matchCase")} />
                     <p className="text-sm font-sans">
                         Match case
                     </p>
-                </label>
-                <label className="flex items-center justify-start space-x-4 cursor-pointer">
-                    <Input className="h-6 w-6" type="checkbox" checked={options.searchInExplanation} onChange={() => handleOptionChange("searchInExplanation")} />
+                </div>
+                <div className="flex items-center justify-start space-x-4">
+                    <Checkbox className="h-6 w-6" checked={options.searchInExplanation} onClick={() => handleOptionChange("searchInExplanation")} />
                     <p className="text-sm font-sans">
                         Search in explanation
                     </p>
-                </label>
+                </div>
             </div>
         </div>
     );

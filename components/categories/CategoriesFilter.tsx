@@ -11,31 +11,10 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "
 import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 import CategoriesSearch from "./CategoriesSearch";
-import { SearchOptions } from "@/types/searchOptions";
-
-// TODO: Make a real tag list
-const tagList = [
-    {
-        value: "routes",
-        label: "Routes"
-    },
-    {
-        value: "controllers",
-        label: "Controllers"
-    },
-    {
-        value: "models",
-        label: "Models"
-    },
-    {
-        value: "views",
-        label: "Views"
-    },
-    {
-        value: "components",
-        label: "Components"
-    },
-]
+import { SearchOptions, categories, tagList } from "@/types";
+import { Separator } from "../ui/separator";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
 
 interface CategoriesFilterProps { };
 
@@ -46,7 +25,7 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
 
     const [open, setOpen] = useState(false);
 
-    const category = searchParams.get("category");
+    const category = searchParams.get("category") || "";
     const tags = useMemo(() => searchParams.get("tags")?.split(",") || [], [searchParams])
     const complexity = searchParams.get("complexity");
 
@@ -99,8 +78,7 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
         }
     }
 
-    const handleSearch = useCallback((searchQuery: string, options: SearchOptions) => {
-        console.log(searchQuery, options)
+    const handleSearchChange = useCallback((searchQuery: string, options: SearchOptions) => {
         const params = new URLSearchParams(searchParams.toString());
 
         if (searchQuery) {
@@ -121,7 +99,7 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
     }, [router, pathname, searchParams]);
 
     const SelectedTags: React.FC<{ tags: string[] }> = ({ tags }) => (
-        <div className="flex flex-wrap gap-2 md:flex-col">
+        <div className="flex flex-wrap gap-2 md:max-w-[200px]">
             {tags.length > 0 ? (
                 tags.map((tag) => (
                     <div key={tag} className="relative group inline-flex items-center cursor-pointer hover:opacity-50" onClick={() => handleRemoveTag(tag)}>
@@ -132,7 +110,7 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
                     </div>
                 ))
             ) : (
-                <div className="relative group inline-flex items-center cursor-pointer hover:opacity-50">
+                <div className="relative group flex items-center cursor-pointer hover:opacity-50">
                     <Badge variant="outline">
                         No tags selected
                     </Badge>
@@ -143,64 +121,99 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
 
     return (
         <div className="p-4">
-            <h1 className="mb-4">
-                <span className="text-2xl font-extrabold">
+            <div className="flex justify-between">
+                <h1 className="text-2xl font-extrabold mb-4">
                     Find examples
-                </span>
-            </h1>
+                </h1>
 
-            <div className="flex flex-col p-4 space-y-4 rounded-md border border-muted md:flex-row md:justify-between md:items-center md:space-y-0">
-                <SelectedTags tags={tags} />
+                {/* Clear filters */}
+                <Button className="" variant="default" onClick={() => router.push(pathname)}>
+                    Clear filters
+                </Button>
+            </div>
 
-                {/* Complexity Filter */}
-                <RadioGroup className="grid grid-cols-3 gap-4">
-                    <Label htmlFor="easy" className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-green-500">
-                        <RadioGroupItem value="easy" id="easy" className="sr-only" onClick={() => handleFilterChange("complexity", "easy")} checked={complexity === "easy"} />
-                        <span>Beginner</span>
-                    </Label>
-                    <Label htmlFor="medium" className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-yellow-500">
-                        <RadioGroupItem value="medium" id="medium" className="sr-only" onClick={() => handleFilterChange("complexity", "medium")} checked={complexity === "medium"} />
-                        <span>Intermediate</span>
-                    </Label>
-                    <Label htmlFor="hard" className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-red-500">
-                        <RadioGroupItem value="hard" id="hard" className="sr-only" onClick={() => handleFilterChange("complexity", "hard")} checked={complexity === "hard"} />
-                        <span>Advanced</span>
-                    </Label>
+            <div className="flex flex-col border border-muted p-4 rounded-md shadow-md">
+                {/* Desktop Categories */}
+                <RadioGroup className="hidden md:flex md:items-center md:justify-between md:">
+                    {categories.map((categoryItem => (
+                        <Label key={categoryItem} htmlFor={categoryItem} className="flex flex-col items-center justify-between w-full rounded-md border-2 border-muted bg-popover p-4 cursor-pointer hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-blue-500">
+                            <RadioGroupItem value={categoryItem} id={categoryItem} className="sr-only" onClick={() => handleFilterChange("category", categoryItem.toLowerCase())} checked={category === categoryItem.toLowerCase()} />
+                            <span>{categoryItem}</span>
+                        </Label>
+                    )))}
                 </RadioGroup>
 
-                {/* Tags Filter */}
-                <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:items-center md:space-x-4">
-                    <Popover open={open} onOpenChange={setOpen}>
-                        <PopoverTrigger asChild>
-                            <Button variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-between">
-                                <p className="truncate">
-                                    {tags.length} Tag{tags.length !== 1 ? "s" : ""} selected
-                                </p>
-                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                            </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-[200px] p-0">
-                            <Command>
-                                <CommandInput placeholder="Search tags..." />
-                                <CommandEmpty>
-                                    No tag found.
-                                </CommandEmpty>
-                                <CommandGroup>
-                                    {tagList.map((tagItem) => (
-                                        <CommandItem key={tagItem.value} onSelect={() => handleFilterChange("tags", tagItem.value)}>
-                                            <Check className={cn("mr-2 h-4 w-4", tags.includes(tagItem.value) ? "opacity-100" : "opacity-0")} />
-                                            {tagItem.label}
-                                        </CommandItem>
-                                    ))}
-                                </CommandGroup>
-                            </Command>
-                        </PopoverContent>
-                    </Popover>
+                <Separator className="hidden md:block my-4" />
+
+                {/* Mobile Categories */}
+                <div className="mb-4 z-100 md:hidden">
+                    <Select onValueChange={(value) => handleFilterChange("category", value.toLowerCase())}>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Select a category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                {categories.map((categoryItem => (
+                                    <SelectItem key={categoryItem} value={categoryItem}>
+                                        {categoryItem}
+                                    </SelectItem>
+                                )))}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
                 </div>
 
-                {/* Search */}
-                <div>
-                    <CategoriesSearch onSearch={handleSearch} />
+                <div className="flex flex-col space-y-4 md:flex-row md:justify-between md:items-center md:space-y-0">
+                    {/* Search */}
+                    <CategoriesSearch onSearch={handleSearchChange} />
+
+                    {/* Complexity Filter */}
+                    <RadioGroup className="flex md:flex-col">
+                        <Label htmlFor="easy" className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 cursor-pointer hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-green-500">
+                            <RadioGroupItem value="easy" id="easy" className="sr-only" onClick={() => handleFilterChange("complexity", "easy")} checked={complexity === "easy"} />
+                            <span>Beginner</span>
+                        </Label>
+                        <Label htmlFor="medium" className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 cursor-pointer hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-yellow-500">
+                            <RadioGroupItem value="medium" id="medium" className="sr-only" onClick={() => handleFilterChange("complexity", "medium")} checked={complexity === "medium"} />
+                            <span>Intermediate</span>
+                        </Label>
+                        <Label htmlFor="hard" className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 cursor-pointer hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-red-500">
+                            <RadioGroupItem value="hard" id="hard" className="sr-only" onClick={() => handleFilterChange("complexity", "hard")} checked={complexity === "hard"} />
+                            <span>Advanced</span>
+                        </Label>
+                    </RadioGroup>
+
+                    {/* Tags Filter */}
+                    <div className="flex flex-col justify-between space-y-4">
+                        <Popover open={open} onOpenChange={setOpen}>
+                            <PopoverTrigger asChild>
+                                <Button variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-between">
+                                    <p className="truncate">
+                                        {tags.length} Tag{tags.length !== 1 ? "s" : ""} selected
+                                    </p>
+                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-[200px] p-0">
+                                <Command>
+                                    <CommandInput placeholder="Search tags..." />
+                                    <CommandEmpty>
+                                        No tag found.
+                                    </CommandEmpty>
+                                    <CommandGroup>
+                                        {tagList.map((tagItem) => (
+                                            <CommandItem key={tagItem.value} onSelect={() => handleFilterChange("tags", tagItem.value)}>
+                                                <Check className={cn("mr-2 h-4 w-4", tags.includes(tagItem.value) ? "opacity-100" : "opacity-0")} />
+                                                {tagItem.label}
+                                            </CommandItem>
+                                        ))}
+                                    </CommandGroup>
+                                </Command>
+                            </PopoverContent>
+                        </Popover>
+
+                        <SelectedTags tags={tags} />
+                    </div>
                 </div>
             </div>
         </div>
