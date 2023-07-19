@@ -18,8 +18,8 @@ const MainNav = () => {
                 </span>
             </Link>
             <nav className="flex items-center space-x-6 text-sm font-medium">
-                <Link href="/categories" className={cn("transition-colors hover:text-foreground/80", pathname === "/categories" ? "text-foreground" : "text-foreground/60")}>
-                    Categories
+                <Link href="/explore" className={cn("transition-colors hover:text-foreground/80", pathname === "/explore" ? "text-foreground" : "text-foreground/60")}>
+                    Explore
                 </Link>
                 <Link href="/examples" className={cn("transition-colors hover:text-foreground/80", pathname === "/examples" ? "text-foreground" : "text-foreground/60")}>
                     Examples

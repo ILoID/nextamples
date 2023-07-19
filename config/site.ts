@@ -16,8 +16,8 @@ interface ExConfig {
 export const exConfig: ExConfig = {
     mainNav: [
         {
-            title: "Categories",
-            href: "/categories",
+            title: "Explore",
+            href: "/explore",
         },
         {
             title: "Examples",

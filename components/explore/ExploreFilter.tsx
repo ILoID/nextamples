@@ -8,17 +8,17 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Check, ChevronsUpDown, X } from "lucide-react";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "../ui/command";
-import { cn } from "@/lib/utils";
+import { cn, getVariant } from "@/lib/utils";
 import { Badge } from "../ui/badge";
-import CategoriesSearch from "./CategoriesSearch";
-import { SearchOptions, categories, tagList } from "@/types";
+import ExploreSearch from "./ExploreSearch";
+import { SearchOptions } from "@/types";
 import { Separator } from "../ui/separator";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { categories, tagList } from "@/constants";
 
-interface CategoriesFilterProps { };
+interface ExploreFilterProps { };
 
-const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
+const ExploreFilter: React.FC<ExploreFilterProps> = ({ }) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -60,23 +60,6 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
     const handleRemoveTag = useCallback((tag: string) => {
         handleFilterChange("tags", tag);
     }, [handleFilterChange]);
-
-    const getVariant = (tag: string) => {
-        switch (tag) {
-            case "routes":
-                return "green";
-            case "controllers":
-                return "orange";
-            case "models":
-                return "blue";
-            case "views":
-                return "destructive";
-            case "components":
-                return "secondary";
-            default:
-                return "outline";
-        }
-    }
 
     const handleSearchChange = useCallback((searchQuery: string, options: SearchOptions) => {
         const params = new URLSearchParams(searchParams.toString());
@@ -127,7 +110,7 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
                 </h1>
 
                 {/* Clear filters */}
-                <Button className="" variant="default" onClick={() => router.push(pathname)}>
+                <Button variant="default" onClick={() => router.push(pathname)}>
                     Clear filters
                 </Button>
             </div>
@@ -165,7 +148,7 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
 
                 <div className="flex flex-col space-y-4 md:flex-row md:justify-between md:items-center md:space-y-0">
                     {/* Search */}
-                    <CategoriesSearch onSearch={handleSearchChange} />
+                    <ExploreSearch onSearch={handleSearchChange} />
 
                     {/* Complexity Filter */}
                     <RadioGroup className="flex md:flex-col">
@@ -220,4 +203,4 @@ const CategoriesFilter: React.FC<CategoriesFilterProps> = ({ }) => {
     );
 };
 
-export default CategoriesFilter;
+export default ExploreFilter;

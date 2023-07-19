@@ -15,7 +15,7 @@ const Header = () => {
                 Learn how to use Next.js&apos;s newest features by example
             </h3>
 
-            <Link href="/examples" className={cn("mt-5", buttonVariants({ variant: "default", size: "lg" }))}>
+            <Link href="/explore" className={cn("mt-5", buttonVariants({ variant: "default", size: "lg" }))}>
                 <p className="font-sans">
                     Get Started
                 </p>
