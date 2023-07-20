@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ExampleCard from "../ExampleCard";
 import { exampleData } from "@/constants";
 import { Example } from "@/types";
@@ -11,10 +11,6 @@ interface ExploreContentProps {};
 const ExploreContent: React.FC<ExploreContentProps> = ({}) => {
     const searchParams = useSearchParams();
     const [examples, setExamples] = useState<Example[]>(exampleData);
-
-    useEffect(() => {
-        // TODO: Fetch categories from API
-    }, [searchParams]);
 
     return (
         <div className="p-4">

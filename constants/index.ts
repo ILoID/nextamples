@@ -1,129 +1,303 @@
+import { Home, Eye, Database, Brush, Rocket, Cog, UploadCloud, ArrowUpCircle, Book } from 'lucide-react';
+
 import { Example } from "@/types";
 
 export const exampleData: Example[] = [
     {
-        title: "Example 1",
+        title: "Routing Basics",
         date: "2023-07-01",
         author: "Author 1",
-        category: "Category 1",
+        category: "Routing",
         complexity: "easy",
         tags: ["routes", "controllers"],
-        summary: "This is a summary of Example 1.",
-        text: "This is the full text of Example 1.",
-        code: "console.log('Hello, world!');"
+        summary: "This example demonstrates the basics of setting up routes in a web application.",
+        text: "In this example, we will explore how to define routes for a web application. We will also look at how to associate these routes with specific controller actions.",
+        code: `
+        const express = require('express');
+        const app = express();
+        const port = 3000;
+
+        app.get('/', (req, res) => {
+            res.send('Hello World!');
+        });
+
+        app.listen(port, () => {
+            console.log(\`Example app listening at http://localhost:\${port}\`);
+        });
+        `
     },
     {
-        title: "Example 2",
+        title: "Model Definition",
         date: "2023-07-02",
         author: "Author 2",
-        category: "Category 2",
+        category: "Data Modeling",
         complexity: "medium",
         tags: ["models", "views"],
-        summary: "This is a summary of Example 2.",
-        text: "This is the full text of Example 2.",
-        code: "console.log('Hello, world!');"
+        summary: "This example demonstrates how to define a model in a web application.",
+        text: "In this example, we will explore how to define a model for a web application. We will also look at how to use this model to interact with a database.",
+        code: `
+        const mongoose = require('mongoose');
+        const { Schema } = mongoose;
+
+        const userSchema = new Schema({
+            name: String,
+            email: String,
+            password: String,
+        });
+
+        const User = mongoose.model('User', userSchema);
+
+        module.exports = User;
+        `
     },
     {
-        title: "Example 3",
+        title: "Advanced Component Design",
         date: "2023-07-03",
         author: "Author 3",
-        category: "Category 3",
+        category: "Component Design",
         complexity: "hard",
         tags: ["components", "routes"],
-        summary: "This is a summary of Example 3.",
-        text: "This is the full text of Example 3.",
-        code: "console.log('Hello, world!');"
+        summary: "This example demonstrates advanced techniques for designing components in a web application.",
+        text: "In this example, we will explore some advanced techniques for designing components in a web application. We will look at how to create reusable components and how to manage state within components.",
+        code: `
+        import React, { useState } from 'react';
+
+        function Counter() {
+            const [count, setCount] = useState(0);
+
+            return (
+                <div>
+                    <p>You clicked {count} times</p>
+                    <button onClick={() => setCount(count + 1)}>
+                        Click me
+                    </button>
+                </div>
+            );
+        }
+
+        export default Counter;
+        `
     },
     {
-        title: "Example 4",
+        title: "View Rendering",
         date: "2023-07-04",
         author: "Author 4",
-        category: "Category 4",
-        complexity: "easy",
-        tags: ["controllers", "models"],
-        summary: "This is a summary of Example 4.",
-        text: "This is the full text of Example 4.",
-        code: "console.log('Hello, world!');"
+        category: "View Rendering",
+        complexity: "medium",
+        tags: ["views", "controllers"],
+        summary: "This example demonstrates how to render views in a web application.",
+        text: "In this example, we will explore how to render views in a web application. We will also look at how to pass data to these views from a controller.",
+        code: `
+        const express = require('express');
+        const app = express();
+
+        app.set('view engine', 'ejs');
+
+        app.get('/', (req, res) => {
+            res.render('index', { title: 'Home Page', message: 'Welcome to our website!' });
+        });
+
+        app.listen(3000, () => {
+            console.log('Server is running on port 3000');
+        });
+        `
     },
     {
-        title: "Example 5",
+        title: "Controller Actions",
         date: "2023-07-05",
         author: "Author 5",
-        category: "Category 5",
-        complexity: "medium",
-        tags: ["views", "components"],
-        summary: "This is a summary of Example 5.",
-        text: "This is the full text of Example 5.",
-        code: "console.log('Hello, world!');"
+        category: "Controllers",
+        complexity: "hard",
+        tags: ["controllers", "routes"],
+        summary: "This example demonstrates how to define controller actions in a web application.",
+        text: "In this example, we will explore how to define controller actions in a web application. We will also look at how to associate these actions with specific routes.",
+        code: `
+        const express = require('express');
+        const router = express.Router();
+
+        router.get('/', (req, res) => {
+            res.send('GET request to the homepage');
+        });
+
+        router.post('/', (req, res) => {
+            res.send('POST request to the homepage');
+        });
+
+        module.exports = router;
+        `
     },
     {
-        title: "Example 6",
+        title: "Component State Management",
         date: "2023-07-06",
         author: "Author 6",
-        category: "Category 6",
-        complexity: "hard",
-        tags: ["routes", "models"],
-        summary: "This is a summary of Example 6.",
-        text: "This is the full text of Example 6.",
-        code: "console.log('Hello, world!');"
+        category: "Components",
+        complexity: "medium",
+        tags: ["components", "views"],
+        summary: "This example demonstrates how to manage state within components in a web application.",
+        text: "In this example, we will explore how to manage state within components in a web application. We will look at how to use hooks to manage state and how to pass state between components.",
+        code: `
+        import React, { useState } from 'react';
+
+        function Counter() {
+            const [count, setCount] = useState(0);
+
+            return (
+                <div>
+                    <p>You clicked {count} times</p>
+                    <button onClick={() => setCount(count + 1)}>
+                        Click me
+                    </button>
+                </div>
+            );
+        }
+
+        export default Counter;
+        `
     },
     {
-        title: "Example 7",
+        title: "Routing with Parameters",
         date: "2023-07-07",
         author: "Author 7",
-        category: "Category 7",
+        category: "Routing",
         complexity: "easy",
-        tags: ["controllers", "views"],
-        summary: "This is a summary of Example 7.",
-        text: "This is the full text of Example 7.",
-        code: "console.log('Hello, world!');"
+        tags: ["routes", "controllers"],
+        summary: "This example demonstrates how to define routes with parameters in a web application.",
+        text: "In this example, we will explore how to define routes with parameters in a web application. We will also look at how to access these parameters from within a controller action.",
+        code: `
+        const express = require('express');
+        const app = express();
+
+        app.get('/users/:userId', (req, res) => {
+            res.send(req.params);
+        });
+
+        app.listen(3000, () => {
+            console.log('Server is running on port 3000');
+        });
+        `
     },
     {
-        title: "Example 8",
+        title: "Model Associations",
         date: "2023-07-08",
         author: "Author 8",
-        category: "Category 8",
-        complexity: "medium",
-        tags: ["components", "models"],
-        summary: "This is a summary of Example 8.",
-        text: "This is the full text of Example 8.",
-        code: "console.log('Hello, world!');"
+        category: "Data Modeling",
+        complexity: "hard",
+        tags: ["models"],
+        summary: "This example demonstrates how to define associations between models in a web application.",
+        text: "In this example, we will explore how to define associations between models in a web application. We will look at how to define one-to-many and many-to-many relationships between models.",
+        code: `
+        const mongoose = require('mongoose');
+        const { Schema } = mongoose;
+
+        const postSchema = new Schema({
+            title: String,
+            content: String,
+            author: { type: Schema.Types.ObjectId, ref: 'User' }
+        });
+
+        const userSchema = new Schema({
+            name: String,
+            email: String,
+            posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
+        });
+
+        const User = mongoose.model('User', userSchema);
+        const Post = mongoose.model('Post', postSchema);
+
+        module.exports = { User, Post };
+        `
     },
     {
-        title: "Example 9",
+        title: "Advanced Routing",
         date: "2023-07-09",
         author: "Author 9",
-        category: "Category 9",
-        complexity: "hard",
-        tags: ["routes", "views"],
-        summary: "This is a summary of Example 9.",
-        text: "This is the full text of Example 9.",
-        code: "console.log('Hello, world!');"
+        category: "Routing",
+        complexity: "medium",
+        tags: ["routes", "controllers"],
+        summary: "This example demonstrates advanced techniques for defining routes in a web application.",
+        text: "In this example, we will explore some advanced techniques for defining routes in a web application. We will look at how to define nested routes and how to use middleware to protect certain routes.",
+        code: `
+        const express = require('express');
+        const router = express.Router();
+
+        router.get('/users/:userId/posts/:postId', (req, res) => {
+            res.send(req.params);
+        });
+
+        const authMiddleware = (req, res, next) => {
+            if (!req.user) {
+                res.status(401).send('You must be logged in to access this route');
+            } else {
+                next();
+            }
+        };
+
+        router.get('/protected', authMiddleware, (req, res) => {
+            res.send('You are authorized to access this route');
+        });
+
+        module.exports = router;
+        `
     },
     {
-        title: "Example 10",
+        title: "Component Lifecycle",
         date: "2023-07-10",
         author: "Author 10",
-        category: "Category 10",
-        complexity: "easy",
-        tags: ["controllers", "components"],
-        summary: "This is a summary of Example 10.",
-        text: "This is the full text of Example 10.",
-        code: "console.log('Hello, world!');"
+        category: "Components",
+        complexity: "hard",
+        tags: ["components", "views"],
+        summary: "This example demonstrates how to work with the component lifecycle in a web application.",
+        text: "In this example, we will explore how to work with the component lifecycle in a web application. We will look at how to use lifecycle methods to manage state and side effects within components.",
+        code: `
+        import React, { Component } from 'react';
+
+        class LifecycleExample extends Component {
+            constructor(props) {
+                super(props);
+                this.state = { count: 0 };
+            }
+
+            componentDidMount() {
+                console.log('Component did mount');
+            }
+
+            componentDidUpdate() {
+                console.log('Component did update');
+            }
+
+            componentWillUnmount() {
+                console.log('Component will unmount');
+            }
+
+            render() {
+                return (
+                    <div>
+                        <p>You clicked {this.state.count} times</p>
+                        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
+                            Click me
+                        </button>
+                    </div>
+                );
+            }
+        }
+
+        export default LifecycleExample;
+        `
     },
 ];
 
 export const categories = [
-    "Routing",
-    "Rendering",
-    "Data Fetching",
-    "Styling",
-    "Optimizing",
-    "Configuring",
-    "Deploying",
-    "Upgrading",
-    "API Reference",
+    { name: "Routing", icon: Home },
+    { name: "Rendering", icon: Eye },
+    { name: "Data Fetching", icon: Database },
+    { name: "Styling", icon: Brush },
+    { name: "Optimizing", icon: Rocket },
+    { name: "Configuring", icon: Cog },
+    { name: "Deploying", icon: UploadCloud },
+    { name: "Upgrading", icon: ArrowUpCircle },
+    { name: "API Reference", icon: Book },
 ];
+
 
 export const tagList = [
     {

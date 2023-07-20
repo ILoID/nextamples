@@ -8,15 +8,15 @@ export function cn(...inputs: ClassValue[]) {
 export const getVariant = (tag: string) => {
 	switch (tag) {
 		case "routes":
-			return "green";
+			return "black";
 		case "controllers":
-			return "orange";
+			return "red";
 		case "models":
-			return "blue";
+			return "green";
 		case "views":
-			return "destructive";
+			return "blue";
 		case "components":
-			return "secondary";
+			return "indigo";
 		default:
 			return "outline";
 	}

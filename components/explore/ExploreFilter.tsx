@@ -118,13 +118,20 @@ const ExploreFilter: React.FC<ExploreFilterProps> = ({ }) => {
             <div className="flex flex-col border border-muted p-4 rounded-md shadow-md">
                 {/* Desktop Categories */}
                 <RadioGroup className="hidden md:flex md:items-center md:justify-between md:">
-                    {categories.map((categoryItem => (
-                        <Label key={categoryItem} htmlFor={categoryItem} className="flex flex-col items-center justify-between w-full rounded-md border-2 border-muted bg-popover p-4 cursor-pointer hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-blue-500">
-                            <RadioGroupItem value={categoryItem} id={categoryItem} className="sr-only" onClick={() => handleFilterChange("category", categoryItem.toLowerCase())} checked={category === categoryItem.toLowerCase()} />
-                            <span>{categoryItem}</span>
-                        </Label>
-                    )))}
+                    {categories.map((categoryItem) => {
+                        const IconComponent = categoryItem.icon;
+                        return (
+                            <Label key={categoryItem.name} htmlFor={categoryItem.name} className="flex flex-col items-center justify-between w-full rounded-md border-2 border-muted bg-popover p-4 cursor-pointer hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-blue-500">
+                                <RadioGroupItem value={categoryItem.name} id={categoryItem.name} className="sr-only" onClick={() => handleFilterChange("category", categoryItem.name.toLowerCase())} checked={category === categoryItem.name.toLowerCase()} />
+                                <div className="flex items-center space-x-2">
+                                    <IconComponent />
+                                    <span>{categoryItem.name}</span>
+                                </div>
+                            </Label>
+                        );
+                    })}
                 </RadioGroup>
+
 
                 <Separator className="hidden md:block my-4" />
 
@@ -136,11 +143,17 @@ const ExploreFilter: React.FC<ExploreFilterProps> = ({ }) => {
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                {categories.map((categoryItem => (
-                                    <SelectItem key={categoryItem} value={categoryItem}>
-                                        {categoryItem}
-                                    </SelectItem>
-                                )))}
+                                {categories.map(((categoryItem) => {
+                                    const IconComponent = categoryItem.icon;
+                                    return (
+                                        <SelectItem key={categoryItem.name} value={categoryItem.name}>
+                                            <div className="flex items-center space-x-2">
+                                                <IconComponent />
+                                                <span>{categoryItem.name}</span>
+                                            </div>
+                                        </SelectItem>
+                                    );
+                                }))}
                             </SelectGroup>
                         </SelectContent>
                     </Select>
