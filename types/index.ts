@@ -11,7 +11,7 @@ export interface Example {
 }
 
 export interface SearchOptions {
-    searchInCodeOnly: boolean;
+    inCode: boolean;
     matchCase: boolean;
-    searchInExplanation: boolean;
+    inText: boolean;
 };

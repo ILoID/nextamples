@@ -15,9 +15,9 @@ const ExploreSearch: React.FC<ExploreSearchProps> = ({
 }) => {
     const [searchQuery, setSearchQuery] = useState("")
     const [options, setOptions] = useState<SearchOptions>({
-        searchInCodeOnly: false,
+        inCode: false,
         matchCase: false,
-        searchInExplanation: false
+        inText: false
     });
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,15 +37,15 @@ const ExploreSearch: React.FC<ExploreSearchProps> = ({
     const clearSearch = () => {
         setSearchQuery("");
         setOptions({
-            searchInCodeOnly: false,
+            inCode: false,
             matchCase: false,
-            searchInExplanation: false
+            inText: false
         });
 
         onSearch("", {
-            searchInCodeOnly: false,
+            inCode: false,
             matchCase: false,
-            searchInExplanation: false
+            inText: false
         });
     };
 
@@ -55,7 +55,7 @@ const ExploreSearch: React.FC<ExploreSearchProps> = ({
                 <Input type="text" placeholder="Search code..." onChange={handleSearchChange} value={searchQuery} />
                 <div className="flex flex-col space-y-4">
                     <div className="flex items-center justify-start space-x-4">
-                        <Checkbox className="h-6 w-6" checked={options.searchInCodeOnly} onClick={() => handleOptionChange("searchInCodeOnly")} />
+                        <Checkbox className="h-6 w-6" checked={options.inCode} onClick={() => handleOptionChange("inCode")} />
                         <p className="text-sm font-sans">
                             Search in code only
                         </p>
@@ -67,7 +67,7 @@ const ExploreSearch: React.FC<ExploreSearchProps> = ({
                         </p>
                     </div>
                     <div className="flex items-center justify-start space-x-4">
-                        <Checkbox className="h-6 w-6" checked={options.searchInExplanation} onClick={() => handleOptionChange("searchInExplanation")} />
+                        <Checkbox className="h-6 w-6" checked={options.inText} onClick={() => handleOptionChange("inText")} />
                         <p className="text-sm font-sans">
                             Search in explanation
                         </p>
