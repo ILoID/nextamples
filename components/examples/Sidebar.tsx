@@ -8,7 +8,7 @@ const Sidebar = () => {
     const router = useRouter();
 
     const handleCategoryClick = (category: string, subcategory: string) => {
-        router.push(`/examples/${category}/${subcategory}`);
+        router.push(`/examples/${category.toLowerCase()}/${subcategory.toLowerCase()}`);
     }
 
     return (
