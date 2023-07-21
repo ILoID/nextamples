@@ -105,8 +105,8 @@ const ExploreFilter: React.FC<ExploreFilterProps> = ({ }) => {
     return (
         <div className="p-4">
             <div className="flex justify-between">
-                <h1 className="text-2xl font-extrabold mb-4">
-                    Find examples
+                <h1 className="text-3xl font-extrabold mb-4">
+                    Explore examples
                 </h1>
 
                 {/* Clear filters */}
@@ -117,7 +117,7 @@ const ExploreFilter: React.FC<ExploreFilterProps> = ({ }) => {
 
             <div className="flex flex-col border border-muted p-4 rounded-md shadow-md">
                 {/* Desktop Categories */}
-                <RadioGroup className="hidden md:flex md:items-center md:justify-between md:">
+                <RadioGroup className="hidden md:flex md:items-center md:justify-between md:overflow-x-auto">
                     {categories.map((categoryItem) => {
                         const IconComponent = categoryItem.icon;
                         return (
