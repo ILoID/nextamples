@@ -1,8 +1,10 @@
 import SiteHeader from "@/components/SiteHeader";
+import Sidebar from "@/components/examples/Sidebar";
 
 const ExamplesPage = () => {
     return (
-        <main className="relative flex min-h-screen flex-col">
+        <main className="flex h-full">
+            <Sidebar />
             Examples Page
         </main>
     );

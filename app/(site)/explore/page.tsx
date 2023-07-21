@@ -3,10 +3,10 @@ import ExploreContent from "@/components/explore/ExploreContent";
 
 const ExplorePage = () => {
     return (
-        <div className="min-h-screen overflow-y-auto">
+        <main className="min-h-screen overflow-y-auto">
             <ExploreFilter />
             <ExploreContent />
-        </div>
+        </main>
     );
 };
 
