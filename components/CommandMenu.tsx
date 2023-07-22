@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "./ui/command";
-import { exConfig } from "@/config/site";
+import { config } from "@/config/site";
 import { CircleIcon, FileIcon, LaptopIcon, MoonIcon, SunIcon } from "lucide-react";
 
 export function CommandMenu ({ ...props }: DialogProps) {
@@ -54,7 +54,7 @@ export function CommandMenu ({ ...props }: DialogProps) {
                         No Results found
                     </CommandEmpty>
                     <CommandGroup heading="Links">
-                        {exConfig.mainNav.filter((navitem) => !navitem.external).map((navItem) => (
+                        {config.mainNav.filter((navitem) => !navitem.external).map((navItem) => (
                             <CommandItem key={navItem.href} value={navItem.title} onSelect={() => {
                                 runCommand(() => router.push(navItem.href as string));
                             }}>
@@ -63,14 +63,14 @@ export function CommandMenu ({ ...props }: DialogProps) {
                             </CommandItem>
                         ))}
                     </CommandGroup>
-                    {exConfig.sidebarNav.map((group) => (
+                    {config.sidebarNav.map((group) => (
                         <CommandGroup key={group.title} heading={group.title}>
                             {group.items.map((navItem) => (
                                 <CommandItem key={navItem.href} value={navItem.title} onSelect={() => {
-                                    runCommand(() => router.push(navItem.href as string));
+                                    runCommand(() => router.push(navItem.href));
                                 }}>
                                     <div className="mr-2 flex h-4 w-4 items-center justify-center">
-                                        <CircleIcon className="h-3 w-3" />
+                                        {group.icon && <group.icon />}
                                     </div>
                                     {navItem.title}
                                 </CommandItem>

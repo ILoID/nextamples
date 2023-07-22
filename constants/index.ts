@@ -2,54 +2,6 @@ import { Home, Eye, Database, Brush, Rocket, Cog, UploadCloud, ArrowUpCircle, Bo
 
 import { Example } from "@/types";
 
-export const categories = [
-    {
-        name: "Routing",
-        icon: Home,
-        subcategories: ["Defining Routes", "Pages and Layouts", "Linking and Navigating", "Route Groups", "Dynamic Routes", "Loading UI and Streaming", "Error Handling", "Parallel Routes", "Intercepting Routes", "Route Handlers", "Middleware", "Project Organization", "Internationalization"]
-    },
-    {
-        name: "Rendering",
-        icon: Eye,
-        subcategories: ["Static and Dynamic", "Edge and Node.js Runtimes"]
-    },
-    {
-        name: "Data Fetching",
-        icon: Database,
-        subcategories: ["Fetching", "Caching", "Revalidating", "Server Actions"]
-    },
-    {
-        name: "Styling",
-        icon: Brush,
-        subcategories: ["CSS Modules", "Tailwind CSS", "CSS-in-JS", "Sass"]
-    },
-    {
-        name: "Optimizing",
-        icon: Rocket,
-        subcategories: ["Images", "Fonts", "Scripts", "Metadata", "Static Assets", "Lazy Loading", "Analytics", "OpenTelemetry", "Instrumentation"]
-    },
-    {
-        name: "Configuring",
-        icon: Cog,
-        subcategories: ["TypeScript", "ESLint", "Environment Variables", "Absolute Imports and Module Path Aliases", "MDX", "src Directory", "Draft Mode"]
-    },
-    {
-        name: "Deploying",
-        icon: UploadCloud,
-        subcategories: ["Static Exports"]
-    },
-    {
-        name: "Upgrading",
-        icon: ArrowUpCircle,
-        subcategories: ["Codemods", "App Router Migration"]
-    },
-    {
-        name: "API Reference",
-        icon: Book,
-        subcategories: ["Components", "File Conventions", "Functions", "next.config.js Options", "create-next-app"]
-    },
-];
-
 export const tagList = [
     {
         value: "routes",

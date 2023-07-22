@@ -14,7 +14,8 @@ import ExploreSearch from "./ExploreSearch";
 import { SearchOptions } from "@/types";
 import { Separator } from "../ui/separator";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { categories, tagList } from "@/constants";
+import { tagList } from "@/constants";
+import { config } from "@/config/site";
 
 interface ExploreFilterProps { };
 
@@ -28,6 +29,8 @@ const ExploreFilter: React.FC<ExploreFilterProps> = ({ }) => {
     const category = searchParams.get("category") || "";
     const tags = useMemo(() => searchParams.get("tags")?.split(",") || [], [searchParams])
     const complexity = searchParams.get("complexity");
+
+    const categories = config.sidebarNav;
 
     const handleFilterChange = useCallback((filterName: string, filterValue: string) => {
         const params = new URLSearchParams(searchParams.toString());
@@ -119,13 +122,12 @@ const ExploreFilter: React.FC<ExploreFilterProps> = ({ }) => {
                 {/* Desktop Categories */}
                 <RadioGroup className="hidden md:flex md:items-center md:justify-between md:overflow-x-auto">
                     {categories.map((categoryItem) => {
-                        const IconComponent = categoryItem.icon;
                         return (
-                            <Label key={categoryItem.name} htmlFor={categoryItem.name} className="flex flex-col items-center justify-between w-full rounded-md border-2 border-muted bg-popover p-4 cursor-pointer hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-blue-500">
-                                <RadioGroupItem value={categoryItem.name} id={categoryItem.name} className="sr-only" onClick={() => handleFilterChange("category", categoryItem.name.toLowerCase())} checked={category === categoryItem.name.toLowerCase()} />
+                            <Label key={categoryItem.title} htmlFor={categoryItem.title} className="flex flex-col items-center justify-between w-full rounded-md border-2 border-muted bg-popover p-4 cursor-pointer hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-blue-500">
+                                <RadioGroupItem value={categoryItem.title} id={categoryItem.title} className="sr-only" onClick={() => handleFilterChange("category", categoryItem.title.toLowerCase())} checked={category === categoryItem.title.toLowerCase()} />
                                 <div className="flex items-center space-x-2">
-                                    <IconComponent />
-                                    <span>{categoryItem.name}</span>
+                                    {categoryItem.icon && <categoryItem.icon />}
+                                    <span>{categoryItem.title}</span>
                                 </div>
                             </Label>
                         );
@@ -144,12 +146,11 @@ const ExploreFilter: React.FC<ExploreFilterProps> = ({ }) => {
                         <SelectContent>
                             <SelectGroup>
                                 {categories.map(((categoryItem) => {
-                                    const IconComponent = categoryItem.icon;
                                     return (
-                                        <SelectItem key={categoryItem.name} value={categoryItem.name}>
+                                        <SelectItem key={categoryItem.title} value={categoryItem.title}>
                                             <div className="flex items-center space-x-2">
-                                                <IconComponent />
-                                                <span>{categoryItem.name}</span>
+                                                {categoryItem.icon && <categoryItem.icon />}
+                                                <span>{categoryItem.title}</span>
                                             </div>
                                         </SelectItem>
                                     );

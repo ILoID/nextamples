@@ -9,7 +9,7 @@ import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "./ui/scroll-area";
-import { exConfig } from "@/config/site";
+import { config } from "@/config/site";
 
 const MobileNav = () => {
     const [open, setOpen] = useState(false);
@@ -29,14 +29,14 @@ const MobileNav = () => {
                 </MobileLink>
                 <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
                     <div className="flex flex-col space-y-3">
-                        {exConfig.mainNav?.map((item) => item.href && (
+                        {config.mainNav.map((item) => item.href && (
                             <MobileLink key={item.href} href={item.href} onOpenChange={setOpen}>
                                 {item.title}
                             </MobileLink>
                         ))}
                     </div>
                     <div className="flex flex-col space-y-2">
-                        {exConfig.sidebarNav.map((item, index) => (
+                        {config.sidebarNav.map((item, index) => (
                             <div key={index} className="flex flex-col space-y-3 pt-6">
                                 <h4 className="font-medium">
                                     {item.title}

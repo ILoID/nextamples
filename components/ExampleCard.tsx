@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { cn, getVariant } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { categories } from "@/constants";
+import { config } from "@/config/site";
 
 interface ExampleCardProps {
     example: Example;
@@ -16,16 +16,20 @@ const ExampleCard: React.FC<ExampleCardProps> = ({
 }) => {
     const router = useRouter();
 
-    // TODO: Make sure category exists
-    const categoryItem = categories.find(category => category.name === example.category);
-    const CategoryIcon = categoryItem?.icon || categories[0].icon;
+    const categories = config.sidebarNav;
+    const categoryItem = categories.find(category => category.title === example.category);
 
     let borderColor = "border-green-500"; // default
     if (example.complexity == "medium") borderColor = "border-yellow-500";
     if (example.complexity == "hard") borderColor = "border-red-500";
 
+    const handleCardClick = () => {
+        console.log("TODO: Navigate to appropriate page");
+        // TODO: Navigate to appropriate page
+    }
+
     return (
-        <Card onClick={() => router.push(`/example/${example.title}`)} className={cn("flex flex-col justify-between shadow-md bg-secondary border-2 transition duration-300 ease-in-out cursor-pointer hover:scale-105", borderColor)}>
+        <Card onClick={handleCardClick} className={cn("flex flex-col justify-between shadow-md bg-secondary border-2 transition duration-300 ease-in-out cursor-pointer hover:scale-105", borderColor)}>
             <CardHeader>
                 <CardTitle className="flex items-start justify-between">
                     <div className="flex flex-col">
@@ -39,7 +43,7 @@ const ExampleCard: React.FC<ExampleCardProps> = ({
                     <div className="flex flex-col text-right">
                         <h2 className="flex items-center space-x-2 text-xl font-mono leading-6 mb-1 font-extralight">
                             <span>{example.category}</span>
-                            <CategoryIcon />
+                            {categoryItem?.icon && <categoryItem.icon />}
                         </h2>
                         <small className="font-normal text-muted-foreground">
                             {example.date}

@@ -1,29 +1,32 @@
 "use client";
 
-import { categories } from "@/constants";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
+import { cn } from "@/lib/utils";
+import { config } from "@/config/site";
 
 const Sidebar = () => {
     const router = useRouter();
+    const pathname = usePathname();
 
-    const handleCategoryClick = (category: string, subcategory: string) => {
-        router.push(`/examples/${category.toLowerCase()}/${subcategory.toLowerCase()}`);
-    }
+    const categories = config.sidebarNav;
 
     return (
-        <aside className="w-[20%] flex flex-col p-12 space-y-4 h-full overflow-y-auto">
+        <aside className="hidden md:flex flex-col w-[25%] p-12 space-y-4 h-full overflow-y-auto">
             <Accordion type="multiple">
                 {categories.map((category) => (
-                    <AccordionItem key={category.name} value={category.name} className="border-none">
-                        <AccordionTrigger className="text-xl font-sans">
-                            {category.name}
+                    <AccordionItem key={category.title} value={category.title} className="border-none">
+                        <AccordionTrigger className="text-lg font-sans text-muted-foreground px-2 py-1.5 mb-2 rounded-md transition duration-200 hover:text-primary hover:bg-muted [&[data-state=open]]:text-primary">
+                            {category.title}
                         </AccordionTrigger>
                         <AccordionContent>
-                            <div className="flex flex-col space-y-1 text-lg font-sans text-muted-foreground">
-                                {category.subcategories.map((subcategory) => (
-                                    <p key={subcategory} onClick={() => handleCategoryClick(category.name, subcategory)} className="ml-2 hover:text-primary cursor-pointer">
-                                        {subcategory}
+                            <div className="flex flex-col space-y-1 text-base font-sans text-muted-foreground ml-2 pl-4 border-l-2 border-muted">
+                                {category.items.map((subcategory) => (
+                                    <p 
+                                        key={subcategory.title}
+                                        onClick={() => router.push(subcategory.href)}
+                                        className={cn("px-2 py-1.5 rounded-md transition duration-200 hover:text-primary hover:bg-muted cursor-pointer", pathname === subcategory.href && "font-semibold text-blue-500 bg-slate-200 dark:bg-slate-900 hover:text-blue-500 hover:bg-slate-200 dark:hover:bg-slate-900")}>
+                                        {subcategory.title}
                                     </p>
                                 ))}
                             </div>
