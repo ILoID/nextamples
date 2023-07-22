@@ -1,12 +1,75 @@
+"use client";
+
+import Link from "next/link";
+import { Prism as SyntaxHighlighter} from "react-syntax-highlighter";
+import { atomDark, solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { ChevronRight } from "lucide-react";
+import { useTheme } from "next-themes";
+
+import { config } from "@/config/site";
+import { exampleData } from "@/constants";
+
 const CategoryPage = ({ params }: { params: { category: string, subcategory: string } }) => {
+    const { theme } = useTheme();
+
     const decodedCategory = decodeURIComponent(params.category);
     const decodedSubcategory = decodeURIComponent(params.subcategory);
 
+    const category = config.sidebarNav.find((category) => category.href.split("/")[2].toLowerCase() === decodedCategory)!;
+    const subCategory = category.items.find((subCategory) => subCategory.href.split("/")[3].toLowerCase() === decodedSubcategory)!;
+
+    const examples = exampleData.filter((example) => example.category === category.title && example.subcategory === subCategory.title);
+
     return (
-        <div>
-            <h1 className="">
-                {decodedCategory} - {decodedSubcategory}
-            </h1>
+        <div className="flex flex-col w-[75%] space-y-8 p-12">
+            <div className="flex items-center gap-2 text-muted-foreground">
+                <Link href={category.href} className="transition duration-200 hover:text-primary">
+                    {category.title}
+                </Link>
+                <ChevronRight className="h-4 w-4" />
+                <span className="text-primary font-semibold">{subCategory.title}</span>
+            </div>
+
+            <div className="flex flex-col space-y-4">
+                <h1 className="text-4xl font-bold">
+                    {subCategory.title}
+                </h1>
+
+                <p className="font-sans">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nisl ultricies nunc, eget ultricies nisl nisl eget nisl. Nullam euismod, nisl eget aliquam ultricies, nunc nisl ultricies nunc, eget ultricies nisl nisl eget nisl.
+                </p>
+
+                <div className="flex flex-col">
+                    {examples.map((example) => (
+                        <div key={example.title} className="flex flex-col space-y-4 p-4 rounded-md shadow-md border border-muted">
+                            <div className="flex items-start justify-between">
+                                <div className="flex flex-col">
+                                    <h2 className="text-3xl font-mono font-semibold">
+                                        {example.title}
+                                    </h2>
+                                    <small className="text-muted-foreground">
+                                        by {example.author}
+                                    </small>
+                                </div>
+                                <small className="text-muted-foreground">
+                                    {example.date}
+                                </small>
+                            </div>
+                            <p>
+                                {example.summary}
+                            </p>
+
+                            <SyntaxHighlighter language="typescript" style={theme === "light" ? solarizedlight : atomDark} showLineNumbers>
+                                {example.code}
+                            </SyntaxHighlighter>
+
+                            <p>
+                                {example.text}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };

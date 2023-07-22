@@ -3,6 +3,7 @@ export interface Example {
     date: string;
     author: string;
     category: string;
+    subcategory: string;
     complexity: "easy" | "medium" | "hard";
     tags: string[];
     summary: string;
