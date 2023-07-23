@@ -8,6 +8,7 @@ import { useTheme } from "next-themes";
 
 import { config } from "@/config/site";
 import { exampleData } from "@/constants";
+import { Separator } from "@/components/ui/separator";
 
 const CategoryPage = ({ params }: { params: { category: string, subcategory: string } }) => {
     const { theme } = useTheme();
@@ -24,8 +25,8 @@ const CategoryPage = ({ params }: { params: { category: string, subcategory: str
     const examples = exampleData.filter((example) => example.category === category.title && example.subcategory === subCategory.title);
 
     return (
-        <div className="flex w-[70%] p-12 space-x-4">
-            <div className="flex flex-col w-[80%] space-y-4">
+        <div className="flex w-[80%] p-4 space-x-4">
+            <div className="flex flex-col w-[80%] space-y-8">
                 <div className="flex items-center gap-2 text-muted-foreground">
                     <Link href={category.href} className="transition duration-200 hover:text-primary">
                         {category.title}
@@ -97,11 +98,11 @@ const CategoryPage = ({ params }: { params: { category: string, subcategory: str
                 </div>
             </div>
 
-            <div className="hidden w-[20%] lg:flex flex-col space-y-4">
+            <div className="hidden w-[20%] lg:flex p-4 flex-col space-y-4">
                 <h2 className=" font-bold">
                     On this page
                 </h2>
-                <ul>
+                <ul className="flex flex-col space-y-2 ml-2">
                     {examples.map((example) => (
                         <Link key={example.title} href={`#${example.title}`} className="transition duration-200 text-muted-foreground hover:text-primary">
                             <li>

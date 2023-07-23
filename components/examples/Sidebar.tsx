@@ -12,7 +12,7 @@ const Sidebar = () => {
     const categories = config.sidebarNav;
 
     return (
-        <aside className="hidden md:flex flex-col w-[30%] p-12 space-y-4 h-full overflow-y-auto">
+        <aside className="hidden md:flex flex-col w-[20%] p-4 px-8 overflow-y-auto">
             <Accordion type="multiple">
                 {categories.map((category) => (
                     <AccordionItem key={category.title} value={category.title} className="border-none">
