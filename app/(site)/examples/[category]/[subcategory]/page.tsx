@@ -1,17 +1,13 @@
-"use client";
-
 import Link from "next/link";
-import { Prism as SyntaxHighlighter} from "react-syntax-highlighter";
-import { atomDark, solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useTheme } from "next-themes";
+import { ChevronRight } from "lucide-react";
 
 import { config } from "@/config/site";
 import { exampleData } from "@/constants";
+import FullExample from "@/components/examples/FullExample";
+import SiteMap from "@/components/examples/SiteMap";
+import SubcategoryNav from "@/components/examples/SubcategoryNav";
 
 const CategoryPage = ({ params }: { params: { category: string, subcategory: string } }) => {
-    const { theme } = useTheme();
-
     const decodedCategory = decodeURIComponent(params.category);
     const decodedSubcategory = decodeURIComponent(params.subcategory);
 
@@ -22,6 +18,11 @@ const CategoryPage = ({ params }: { params: { category: string, subcategory: str
     const nextSubCategory = category.items[category.items.indexOf(subCategory) + 1];
 
     const examples = exampleData.filter((example) => example.category === category.title && example.subcategory === subCategory.title);
+
+    const sortedExamples = examples.sort((a, b) => {
+        const order = ["easy", "medium", "hard"];
+        return order.indexOf(a.complexity) - order.indexOf(b.complexity);
+    });
 
     return (
         <div className="flex w-[80%] p-4 space-x-4">
@@ -43,74 +44,17 @@ const CategoryPage = ({ params }: { params: { category: string, subcategory: str
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget aliquam ultricies, nunc nisl ultricies nunc, eget ultricies nisl nisl eget nisl. Nullam euismod, nisl eget aliquam ultricies, nunc nisl ultricies nunc, eget ultricies nisl nisl eget nisl.
                     </p>
 
-                    <div className="flex flex-col">
-                        {examples.map((example) => (
-                            <div key={example.title} id={example.title} className="flex flex-col space-y-4 p-4 rounded-md shadow-md border border-muted">
-                                <div className="flex items-start justify-between">
-                                    <div className="flex flex-col">
-                                        <h2 className="text-3xl font-mono font-semibold">
-                                            {example.title}
-                                        </h2>
-                                        <small className="text-muted-foreground">
-                                            by {example.author}
-                                        </small>
-                                    </div>
-                                    <small className="text-muted-foreground">
-                                        {example.date}
-                                    </small>
-                                </div>
-                                <p>
-                                    {example.summary}
-                                </p>
-
-                                <SyntaxHighlighter language="typescript" style={theme === "light" ? solarizedlight : atomDark} showLineNumbers wrapLines>
-                                    {example.code}
-                                </SyntaxHighlighter>
-
-                                <p>
-                                    {example.text}
-                                </p>
-                            </div>
+                    <div className="flex flex-col space-y-4">
+                        {sortedExamples.map((example) => (
+                            <FullExample key={example.title} example={example} />
                         ))}
                     </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                    {previousSubCategory ? (
-                        <Link href={previousSubCategory.href} className="flex items-center space-x-2">
-                            <ChevronLeft />
-                            <p>
-                                {previousSubCategory.title}
-                            </p>
-                        </Link>
-                    ) : (
-                        <div />
-                    )}
-                    {nextSubCategory && (
-                        <Link href={nextSubCategory.href} className="flex items-center space-x-2">
-                            <p>
-                                {nextSubCategory.title}
-                            </p>
-                            <ChevronRight />
-                        </Link>
-                    )}
-                </div>
+                <SubcategoryNav prev={previousSubCategory} next={nextSubCategory} />
             </div>
 
-            <div className="hidden w-[20%] lg:flex p-4 flex-col space-y-4">
-                <h2 className=" font-bold">
-                    On this page
-                </h2>
-                <ul className="flex flex-col space-y-2 ml-2">
-                    {examples.map((example) => (
-                        <Link key={example.title} href={`#${example.title}`} className="transition duration-200 text-muted-foreground hover:text-primary">
-                            <li>
-                                {example.title}
-                            </li>
-                        </Link>
-                    ))}
-                </ul>
-            </div>
+            <SiteMap examples={examples} />
         </div>
     );
 };

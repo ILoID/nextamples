@@ -24,8 +24,12 @@ const ExampleCard: React.FC<ExampleCardProps> = ({
     if (example.complexity == "hard") borderColor = "border-red-500";
 
     const handleCardClick = () => {
-        console.log("TODO: Navigate to appropriate page");
-        // TODO: Navigate to appropriate page
+        const category = decodeURIComponent(example.category).toLowerCase().replace(/\s+/g, "-");
+        const subcategory = decodeURIComponent(example.subcategory).toLowerCase().replace(/\s+/g, "-");
+
+        const path = `/examples/${category}/${subcategory}#${example.title}`;
+
+        router.push(path);
     }
 
     return (

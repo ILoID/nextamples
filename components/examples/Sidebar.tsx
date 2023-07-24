@@ -12,11 +12,11 @@ const Sidebar = () => {
     const categories = config.sidebarNav;
 
     return (
-        <aside className="hidden md:flex flex-col w-[20%] p-4 px-8 overflow-y-auto">
+        <aside className="hidden md:flex flex-col min-w-[20%] py-16 px-4 overflow-y-auto">
             <Accordion type="multiple">
                 {categories.map((category) => (
                     <AccordionItem key={category.title} value={category.title} className="border-none">
-                        <AccordionTrigger className="flex items-center justify-start text-lg font-sans text-muted-foreground px-2 py-1.5 mb-2 rounded-md transition duration-200 hover:text-primary hover:bg-muted [&[data-state=open]]:text-primary">
+                        <AccordionTrigger className="flex items-center justify-start text-md font-sans text-muted-foreground px-2 py-1.5 mb-2 rounded-md transition duration-200 hover:text-primary hover:bg-muted [&[data-state=open]]:text-primary">
                             {category.icon && (
                                 <div>
                                     <category.icon className="h-6 w-6 mr-4" />
@@ -27,7 +27,7 @@ const Sidebar = () => {
                             </span>
                         </AccordionTrigger>
                         <AccordionContent>
-                            <div className="flex flex-col space-y-1 text-base font-sans text-muted-foreground ml-2 pl-4 border-l-2 border-muted">
+                            <div className="flex flex-col space-y-1 text-md font-sans text-muted-foreground ml-2 pl-4 border-l-2 border-muted">
                                 {category.items.map((subcategory) => (
                                     <p 
                                         key={subcategory.title}
