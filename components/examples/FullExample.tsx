@@ -25,7 +25,7 @@ const FullExample: React.FC<FullExampleProps> = ({
     if (example.complexity == "hard") borderColor = "border-red-500";
 
     return (
-        <div id={example.title} className={cn("flex flex-col space-y-4 p-4 rounded-md shadow-md border-2", borderColor)}>
+        <div id={example.title} className={cn("flex flex-col space-y-4 p-4 rounded-md shadow-md border", borderColor)}>
             <div className="flex items-start justify-between">
                 <div className="flex flex-col">
                     <h2 className="text-3xl font-mono font-semibold">
