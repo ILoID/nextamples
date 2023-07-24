@@ -16,8 +16,15 @@ const Sidebar = () => {
             <Accordion type="multiple">
                 {categories.map((category) => (
                     <AccordionItem key={category.title} value={category.title} className="border-none">
-                        <AccordionTrigger className="text-lg font-sans text-muted-foreground px-2 py-1.5 mb-2 rounded-md transition duration-200 hover:text-primary hover:bg-muted [&[data-state=open]]:text-primary">
-                            {category.title}
+                        <AccordionTrigger className="flex items-center justify-start text-lg font-sans text-muted-foreground px-2 py-1.5 mb-2 rounded-md transition duration-200 hover:text-primary hover:bg-muted [&[data-state=open]]:text-primary">
+                            {category.icon && (
+                                <div>
+                                    <category.icon className="h-6 w-6 mr-4" />
+                                </div>
+                            )}
+                            <span className="mr-auto">
+                                {category.title}
+                            </span>
                         </AccordionTrigger>
                         <AccordionContent>
                             <div className="flex flex-col space-y-1 text-base font-sans text-muted-foreground ml-2 pl-4 border-l-2 border-muted">

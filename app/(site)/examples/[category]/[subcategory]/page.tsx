@@ -8,7 +8,6 @@ import { useTheme } from "next-themes";
 
 import { config } from "@/config/site";
 import { exampleData } from "@/constants";
-import { Separator } from "@/components/ui/separator";
 
 const CategoryPage = ({ params }: { params: { category: string, subcategory: string } }) => {
     const { theme } = useTheme();
