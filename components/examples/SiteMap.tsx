@@ -18,7 +18,7 @@ const SiteMap: React.FC<SiteMapProps> = ({
     const groupedExamples = groupByComplexity(examples);
 
     return (
-        <aside className="hidden w-[20%] lg:flex h-screen sticky top-[calc(100vh-92%)] py-16 px-4 flex-col space-y-4">
+        <aside className="hidden w-[20%] lg:flex h-screen sticky top-[calc(100vh-91%)] py-16 px-4 flex-col space-y-4">
             <h2 className="font-bold">
                 On this page
             </h2>
