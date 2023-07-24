@@ -30,6 +30,9 @@ const MainNav = () => {
                 <Link href="/about" className={cn("transition-colors hover:text-foreground/80", pathname === "/about" ? "text-foreground" : "text-foreground/60")}>
                     About
                 </Link>
+                <Link href="/contribute" className={cn("transition-colors hover:text-foreground/80", pathname === "/contribute" ? "text-foreground" : "text-foreground/60")}>
+                    Contribute
+                </Link>
             </nav>
         </div>
     );
