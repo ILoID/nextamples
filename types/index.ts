@@ -11,6 +11,16 @@ export interface Example {
     code: string;
 }
 
+export interface FilterOptions {
+    category: string;
+    tags: string;
+    complexity: string;
+    searchQuery: string;
+    inCode: string;
+    matchCase: string;
+    inText: string;
+};
+
 export interface SearchOptions {
     inCode: boolean;
     matchCase: boolean;

@@ -13,6 +13,8 @@ export async function POST (req: NextRequest) {
             return new NextResponse("Missing required fields", { status: 400 });
         }
 
+        const tagsString = tags.join(",");
+
         const example = await prisma.example.create({
             data: {
                 title,
@@ -20,7 +22,7 @@ export async function POST (req: NextRequest) {
                 category,
                 subcategory,
                 complexity,
-                tags,
+                tags: tagsString,
                 summary,
                 text,
                 code

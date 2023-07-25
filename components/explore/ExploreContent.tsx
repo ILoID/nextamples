@@ -1,17 +1,10 @@
 import ExampleCard from "../ExampleCard";
 import { Example } from "@prisma/client";
 import getExamples from "@/actions/getExamples";
+import { FilterOptions } from "@/types";
 
 interface ExploreContentProps {
-    filters: {
-        category?: string;
-        tags?: string;
-        complexity?: string;
-        searchQuery?: string;
-        inCode?: string;
-        matchCase?: string;
-        inText?: string;
-    }
+    filters: FilterOptions;
 };
 
 const ExploreContent: React.FC<ExploreContentProps> = async ({
