@@ -1,11 +1,11 @@
 "use client";
 
-import { Example } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { cn, getVariant } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { config } from "@/config/site";
+import { Example } from "@prisma/client";
 
 interface ExampleCardProps {
     example: Example;
@@ -22,6 +22,8 @@ const ExampleCard: React.FC<ExampleCardProps> = ({
     let borderColor = "border-green-500"; // default
     if (example.complexity == "medium") borderColor = "border-yellow-500";
     if (example.complexity == "hard") borderColor = "border-red-500";
+
+    const tagList = example.tags.split(",");
 
     const handleCardClick = () => {
         const category = decodeURIComponent(example.category).toLowerCase().replace(/\s+/g, "-");
@@ -50,7 +52,7 @@ const ExampleCard: React.FC<ExampleCardProps> = ({
                             {categoryItem?.icon && <categoryItem.icon />}
                         </h2>
                         <small className="font-normal text-muted-foreground">
-                            {example.date}
+                            {example.createdAt.toLocaleDateString()}
                         </small>
                     </div>
                 </CardTitle>
@@ -60,7 +62,7 @@ const ExampleCard: React.FC<ExampleCardProps> = ({
                     {example.summary}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-4">
-                    {example.tags.map(tag => (
+                    {tagList.map(tag => (
                         <Badge key={tag} variant={getVariant(tag)} className="capitalize">
                             {tag}
                         </Badge>

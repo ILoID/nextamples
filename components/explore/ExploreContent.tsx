@@ -1,35 +1,42 @@
-"use client";
-
-import { useSearchParams } from "next/navigation";
 import ExampleCard from "../ExampleCard";
-import { exampleData } from "@/constants";
-import { Example } from "@/types";
+import { Example } from "@prisma/client";
+import getExamples from "@/actions/getExamples";
 
-interface ExploreContentProps {};
+interface ExploreContentProps {
+    filters: {
+        category?: string;
+        tags?: string;
+        complexity?: string;
+        searchQuery?: string;
+        inCode?: string;
+        matchCase?: string;
+        inText?: string;
+    }
+};
 
-const ExploreContent: React.FC<ExploreContentProps> = ({}) => {
-    const searchParams = useSearchParams();
+const ExploreContent: React.FC<ExploreContentProps> = async ({
+    filters
+}) => {
+    let examples: Example[] = await getExamples();
 
-    const category = searchParams.get("category") || "";
-    const tags = searchParams.get("tags")?.split(",") || [];
-    const complexity = searchParams.get("complexity") || "";
-    const searchQuery = searchParams.get("search") || "";
-
-    let examples: Example[] = exampleData;
+    const { category, tags, complexity, searchQuery } = filters;
 
     if (category) {
         examples = examples.filter(example => example.category.toLowerCase() === category);
     }
-    if (tags.length > 0) {
-        examples = examples.filter(example => tags.every(tag => example.tags.includes(tag)));
+    if (tags) {
+        const tagList = tags.split(",");
+        tagList.forEach(tag => {
+            examples = examples.filter(example => example.tags.includes(tag));
+        });
     }
     if (complexity) {
         examples = examples.filter(example => example.complexity === complexity);
     }
     if (searchQuery) {
-        const inCode = searchParams.get("inCode") === "1";
-        const matchCase = searchParams.get("matchCase") === "1";
-        const inText = searchParams.get("inText") === "1";
+        const inCode = filters.inCode === "1";
+        const matchCase = filters.matchCase === "1";
+        const inText = filters.inText === "1";
 
         const searchFunc = (text: string) => {
             if (matchCase) {
@@ -55,7 +62,7 @@ const ExploreContent: React.FC<ExploreContentProps> = ({}) => {
         <div className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {examples.map(example => (
-                    <ExampleCard key={example.title} example={example} />
+                    <ExampleCard key={example.id} example={example} />
                 ))}
             </div>
         </div>

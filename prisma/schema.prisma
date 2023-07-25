@@ -20,7 +20,7 @@ model Example {
   category    String
   subcategory String
   complexity  String
-  tags        String[]
+  tags        String
   summary     String
   text        String
   code        String

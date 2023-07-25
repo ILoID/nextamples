@@ -23,7 +23,7 @@ const formSchema = z.object({
     category: z.string().min(2),
     subcategory: z.string().min(2),
     complexity: z.string(),
-    tags: z.array(z.string()),
+    tags: z.array(z.string().toLowerCase()),
     summary: z.string().min(10, { message: "Summary must be at least 10 characters long." }),
     text: z.string().min(10, { message: "Text must be at least 10 characters long." }),
     code: z.string().min(30, { message: "Code must be at least 30 characters long." }),
