@@ -8,7 +8,6 @@ import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
 import { cn, getVariant } from "@/lib/utils";
 import dynamic from "next/dynamic";
-import { Button } from "../ui/button";
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 
