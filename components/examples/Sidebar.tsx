@@ -27,7 +27,7 @@ const Sidebar = () => {
                             </span>
                         </AccordionTrigger>
                         <AccordionContent>
-                            <div className="flex flex-col space-y-1 text-md font-sans text-muted-foreground ml-2 pl-4 border-l-2 border-muted">
+                            <div className="flex flex-col space-y-1 text-md font-sans text-muted-foreground ml-4 pl-2 border-l-2 border-muted">
                                 {category.items.map((subcategory) => (
                                     <p 
                                         key={subcategory.title}
