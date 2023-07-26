@@ -23,8 +23,8 @@ const CategoryPage = async ({ params }: { params: { category: string, subcategor
     });
 
     return (
-        <div className="flex w-[80%] p-4 space-x-4">
-            <div className="flex flex-col w-[80%] space-y-8">
+        <div className="flex w-full lg:w-[80%] p-4 space-x-4 overflow-x-hidden">
+            <div className="flex flex-col w-full lg:w-[80%] space-y-8">
                 <div className="flex items-center gap-2 text-muted-foreground">
                     <Link href={category.href} className="transition duration-200 hover:text-primary">
                         {category.title}

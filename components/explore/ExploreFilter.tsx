@@ -163,7 +163,7 @@ const ExploreFilter = () => {
                     <ExploreSearch onSearch={handleSearchChange} />
 
                     {/* Complexity Filter */}
-                    <RadioGroup className="flex md:flex-col">
+                    <RadioGroup className="flex justify-around md:flex-col">
                         <Label htmlFor="easy" className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 cursor-pointer hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-green-500">
                             <RadioGroupItem value="easy" id="easy" className="sr-only" onClick={() => handleFilterChange("complexity", "easy")} checked={complexity === "easy"} />
                             <span>Beginner</span>

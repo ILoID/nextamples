@@ -36,7 +36,7 @@ const ExampleCard: React.FC<ExampleCardProps> = ({
     }
 
     return (
-        <Card onClick={handleCardClick} className={cn("flex flex-col justify-between shadow-md bg-secondary border-2 transition duration-300 ease-in-out cursor-pointer hover:scale-105", borderColor)}>
+        <Card onClick={handleCardClick} className={cn("flex flex-col justify-between shadow-md border-2 transition duration-300 ease-in-out cursor-pointer hover:scale-105", borderColor)}>
             <CardHeader>
                 <CardTitle className="flex items-start justify-between">
                     <div className="flex flex-col">
