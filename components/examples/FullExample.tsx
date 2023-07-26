@@ -2,7 +2,6 @@
 
 import { atomDark, solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-import { Example } from "@/types";
 import { useTheme } from "next-themes";
 import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
@@ -10,6 +9,7 @@ import { cn, getVariant } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
+import { Example } from "@prisma/client";
 
 const SyntaxHighlighter = dynamic(() => import('react-syntax-highlighter').then(mod => mod.Prism), { ssr: false });
 
@@ -27,6 +27,8 @@ const FullExample: React.FC<FullExampleProps> = ({
     if (example.complexity == "medium") borderColor = "border-yellow-500";
     if (example.complexity == "hard") borderColor = "border-red-500";
 
+    const tagList = example.tags.split(",");
+
     const onCopy = (code: string) => {
         navigator.clipboard.writeText(code);
         setIsCopied(true);
@@ -41,17 +43,17 @@ const FullExample: React.FC<FullExampleProps> = ({
                         {example.title}
                     </h2>
                     <small className="text-muted-foreground">
-                        by {example.author}
+                        by <span className="italic">{example.author}</span>
                     </small>
                 </div>
                 <small className="text-muted-foreground">
-                    {example.date}
+                    {example.createdAt.toLocaleDateString()}
                 </small>
 
             </div>
             
-            <div>
-                {example.tags.map((tag) => (
+            <div className="flex items-center space-x-2">
+                {tagList.map((tag) => (
                     <Badge key={tag} variant={getVariant(tag)} className="capitalize cursor-default">
                         {tag}
                     </Badge>
@@ -59,6 +61,7 @@ const FullExample: React.FC<FullExampleProps> = ({
             </div>
 
             <Separator />
+
             <p className="p-2 font-sans">
                 {example.summary}
             </p>

@@ -26,8 +26,9 @@ const ExampleCard: React.FC<ExampleCardProps> = ({
     const tagList = example.tags.split(",");
 
     const handleCardClick = () => {
-        const category = decodeURIComponent(example.category).toLowerCase().replace(/\s+/g, "-");
-        const subcategory = decodeURIComponent(example.subcategory).toLowerCase().replace(/\s+/g, "-");
+        const category = example.category.toLowerCase().replace(/\s+/g, "-");
+        const subcategory = example.subcategory.toLowerCase().replace(/\s+/g, "-");
+        console.log(subcategory)
 
         const path = `/examples/${category}/${subcategory}#${example.title}`;
 

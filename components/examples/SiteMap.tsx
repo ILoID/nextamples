@@ -1,4 +1,4 @@
-import { Example } from "@/types";
+import { Example } from "@prisma/client";
 import Link from "next/link";
 
 interface SiteMapProps {
@@ -12,7 +12,7 @@ const SiteMap: React.FC<SiteMapProps> = ({
         return examples.reduce((grouped, example) => {
             (grouped[example.complexity] = grouped[example.complexity] || []).push(example);
             return grouped;
-        }, {} as Record<"easy" | "medium" | "hard", typeof examples>);
+        }, {} as Record<Example["complexity"], Example[]>);
     };
 
     const groupedExamples = groupByComplexity(examples);
@@ -29,7 +29,7 @@ const SiteMap: React.FC<SiteMapProps> = ({
                     </h3>
                     <ul className="flex flex-col space-y-2 ml-2">
                         {examples.map((example) => (
-                            <Link key={example.title} href={`#${example.title}`} className="transition duration-200 text-muted-foreground hover:text-primary">
+                            <Link key={example.id} href={`#${example.title}`} className="transition duration-200 text-muted-foreground hover:text-primary">
                                 <li>
                                     {example.title}
                                 </li>

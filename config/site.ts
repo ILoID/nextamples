@@ -50,7 +50,7 @@ export const config: Config = {
                 },
                 {
                     title: "Pages and Layouts",
-                    href: "/examples/routing/pages",
+                    href: "/examples/routing/pages-and-layouts",
                     items: [],
                 },
                 {

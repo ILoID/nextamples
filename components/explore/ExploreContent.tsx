@@ -12,7 +12,7 @@ const ExploreContent: React.FC<ExploreContentProps> = async ({
 }) => {
     let examples: Example[] = await getExamples();
 
-    const { category, tags, complexity, searchQuery } = filters;
+    const { category, tags, complexity, search } = filters;
 
     if (category) {
         examples = examples.filter(example => example.category.toLowerCase() === category);
@@ -26,16 +26,16 @@ const ExploreContent: React.FC<ExploreContentProps> = async ({
     if (complexity) {
         examples = examples.filter(example => example.complexity === complexity);
     }
-    if (searchQuery) {
+    if (search) {
         const inCode = filters.inCode === "1";
         const matchCase = filters.matchCase === "1";
         const inText = filters.inText === "1";
 
         const searchFunc = (text: string) => {
             if (matchCase) {
-                return text.includes(searchQuery);
+                return text.includes(search);
             } else {
-                return text.toLowerCase().includes(searchQuery.toLowerCase());
+                return text.toLowerCase().includes(search.toLowerCase());
             }
         };
 

@@ -17,9 +17,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { tagList } from "@/constants";
 import { config } from "@/config/site";
 
-interface ExploreFilterProps { };
-
-const ExploreFilter: React.FC<ExploreFilterProps> = ({ }) => {
+const ExploreFilter = () => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();

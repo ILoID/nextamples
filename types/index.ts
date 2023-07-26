@@ -15,7 +15,7 @@ export interface FilterOptions {
     category: string;
     tags: string;
     complexity: string;
-    searchQuery: string;
+    search: string;
     inCode: string;
     matchCase: string;
     inText: string;

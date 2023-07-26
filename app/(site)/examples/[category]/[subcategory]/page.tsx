@@ -2,22 +2,20 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 import { config } from "@/config/site";
-import { exampleData } from "@/constants";
 import FullExample from "@/components/examples/FullExample";
 import SiteMap from "@/components/examples/SiteMap";
 import SubcategoryNav from "@/components/examples/SubcategoryNav";
+import getExamplesBySubcategory from "@/actions/getExamplesBySubcategory";
+import { Example } from "@prisma/client";
 
-const CategoryPage = ({ params }: { params: { category: string, subcategory: string } }) => {
-    const decodedCategory = decodeURIComponent(params.category);
-    const decodedSubcategory = decodeURIComponent(params.subcategory);
-
-    const category = config.sidebarNav.find((category) => category.href.split("/")[2].toLowerCase() === decodedCategory)!;
-    const subCategory = category.items.find((subCategory) => subCategory.href.split("/")[3].toLowerCase() === decodedSubcategory)!;
+const CategoryPage = async ({ params }: { params: { category: string, subcategory: string } }) => {
+    const category = config.sidebarNav.find((category) => category.href.split("/")[2].toLowerCase() === params.category)!;
+    const subCategory = category.items.find((subCategory) => subCategory.href.split("/")[3].toLowerCase() === params.subcategory)!;
 
     const previousSubCategory = category.items[category.items.indexOf(subCategory) - 1];
     const nextSubCategory = category.items[category.items.indexOf(subCategory) + 1];
 
-    const examples = exampleData.filter((example) => example.category === category.title && example.subcategory === subCategory.title);
+    const examples: Example[] = await getExamplesBySubcategory(subCategory.title);
 
     const sortedExamples = examples.sort((a, b) => {
         const order = ["easy", "medium", "hard"];
@@ -46,7 +44,7 @@ const CategoryPage = ({ params }: { params: { category: string, subcategory: str
 
                     <div className="flex flex-col space-y-4">
                         {sortedExamples.map((example) => (
-                            <FullExample key={example.title} example={example} />
+                            <FullExample key={example.id} example={example} />
                         ))}
                     </div>
                 </div>
