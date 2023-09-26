@@ -36,11 +36,11 @@ const ExampleCard: React.FC<ExampleCardProps> = ({
     }
 
     return (
-        <Card onClick={handleCardClick} className={cn("flex flex-col justify-between shadow-md border-1 cursor-pointer", borderColor)}>
+        <Card onClick={handleCardClick} className={cn("flex flex-col justify-between shadow-md border cursor-pointer transition duration-300 hover:shadow-lg", borderColor)}>
             <CardHeader>
                 <CardTitle className="flex items-start justify-between">
                     <div className="flex flex-col">
-                        <h1 className="text-2xl font-light leading-6 mb-1">
+                        <h1 className="text-2xl font-light leading-6 mb-2">
                             {example.title}
                         </h1>
                         <small className="font-normal text-muted-foreground">
@@ -48,7 +48,7 @@ const ExampleCard: React.FC<ExampleCardProps> = ({
                         </small>
                     </div>
                     <div className="flex flex-col text-right">
-                        <h2 className="flex items-center space-x-2 text-xl font-mono leading-6 mb-1 font-extralight">
+                        <h2 className="flex items-center space-x-2 text-xl font-mono leading-6 mb-2 font-extralight">
                             <span>{example.category}</span>
                             {categoryItem?.icon && <categoryItem.icon />}
                         </h2>
